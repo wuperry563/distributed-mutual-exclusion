@@ -11,15 +11,12 @@ public class Parser {
     public static Parser instance = null;
     private static String config = "";
     private static List<String> configArray;
-    public static int numNodes, minPerActive, maxPerActive, minSendDelay, snapshotDelay, maxNumber;
+    public static int numNodes;
+    public static int requestDelay;
+    public static int meanCS;
+    public static int numRequests;
     public static Map<Integer,NodeInfo> nodes;
-    public static TreeNode curTreeNode = null;
-    public static int MESSAGE_SIZE = 50;
 
-//    The first valid line of the configuration file contains four tokens. The first token is the number
-//    of nodes in the system. The second token is the mean value for inter-request delay (in milliseconds).
-//    The third token is the mean value for cs-execution time (in milliseconds). The fourth token is the
-//    number of requests each node should generate.
     private Parser() {
     }
 
@@ -39,24 +36,13 @@ public class Parser {
 
     private static void createNodeInfo() {
         NodeInfo node;
-//        List<Integer> neighbors;
         for(int i = 0; i<instance.numNodes; i++){
-//            System.out.println(configArray.get(i+1));
             String[]configNode = configArray.get(i+1).split(" ");
             node = new NodeInfo();
             int id = Integer.parseInt(configNode[0]);
             node.setHostName(configNode[1]);
             node.setListenPort(Integer.parseInt(configNode[2]));
             instance.nodes.put(id, node);
-        }
-        for(int i = 1+instance.numNodes; i < configArray.size(); i++){
-            List<Integer> neighbors = new ArrayList<>();
-            int nodeNum = i-1-instance.numNodes;
-            String[] lmao = configArray.get(i).split(" ");
-            Arrays.stream(configArray.get(i).split(" ")).forEach(
-                    s -> {neighbors.add(Integer.parseInt(s));}
-            );
-            nodes.get(nodeNum).setNeighbors(neighbors);
         }
     }
 
@@ -72,21 +58,23 @@ public class Parser {
     }
 
     public static void setGlobalVariables(){
-        int []vars = new int[6];
+        int []vars = new int[4];
        String[] globalVars = instance.configArray.get(0).split(" ");
        for(int i = 0; i<globalVars.length;i++){
            vars[i] = Integer.parseInt(globalVars[i]);
-//           System.out.println("global variable added: "+vars[i]);
        }
        instance.numNodes = vars[0];
-       instance.minPerActive = vars[1];
-       instance.maxPerActive = vars[2];
-       instance.minSendDelay = vars[3];
-       instance.snapshotDelay = vars[4];
-       instance.maxNumber = vars[5];
+       instance.requestDelay = vars[1];
+       instance.meanCS = vars[2];
+       instance.numRequests = vars[3];
     }
 
     public static void main(String args[]){
+        try{
+            Parser p = Parser.getInstance("config.txt");
+        }catch(Exception e){
+
+        }
 
     }
 }
