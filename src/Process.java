@@ -64,27 +64,43 @@ public class Process implements Runnable{
             int node = k;
             String host = v.getHostName();
             Integer port = v.getListenPort();
-            int retries = 0;
-            boolean connected = false;
+            try{
+                Socket socket = getClientConnection(host,port);
+                if(socket == null){
+                    System.out.println("unable to obtain socket connection");
+                    System.exit(0);
+                }
+                connections.put(node,socket);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
             System.out.println("sleeping");
-            while(!connected && retries < 3){
+
+            System.out.println(k+""+v);
+        });
+    }
+
+    private Socket getClientConnection(String host, int port) throws Exception{
+        int retries = 0;
+        boolean connected = false;
+        Socket socket = null;
+        while(!connected && retries < 3){
             try {
                 retries++;
                 Thread.sleep(2000);
-                Socket socket = new Socket(host, port);
-                connections.put(node,socket);
+                socket = new Socket(host, port);
                 connected = true;
                 System.out.println("connected");
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+            }   catch(Exception e){
+                e.printStackTrace();
             }
-            if(!connected){
-                System.out.println("som ting wong");
-                throw new Exception("som ting wong");
-            }
-            System.out.println(k+""+v);
-        });
+        }
+        if(socket == null){
+            return null;
+        }
+        return socket;
     }
 
 }
