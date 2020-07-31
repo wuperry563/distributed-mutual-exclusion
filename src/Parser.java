@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Parser {
 
-    public static final String LINE_SEPARATOR_PROPERTY = System.getProperty("line.separator");
+    public static final String LINE_SEPARATOR_PROPERTY = "\n";
     public static Parser instance = null;
     private static String config = "";
     private static List<String> configArray;
@@ -60,6 +60,7 @@ public class Parser {
     public static void setGlobalVariables(){
         int []vars = new int[4];
        String[] globalVars = instance.configArray.get(0).split(" ");
+//       String [] globalVars = configLines[0].split(" ");
        for(int i = 0; i<globalVars.length;i++){
            vars[i] = Integer.parseInt(globalVars[i]);
        }

@@ -1,9 +1,14 @@
 import java.io.IOException;
+import java.net.Socket;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Process implements Runnable{
 
     private int nodeId;
     private Parser parser;
+    private NodeInfo nodeInfo;
+    private Map<Integer, Socket> connections;
     public static final String CLIENT = "Client";
     public static final String SERVER = "Server";
     private static Process instance = null;
@@ -24,6 +29,8 @@ public class Process implements Runnable{
 
     private Process(int nodeId) throws IOException {
          parser = Parser.getInstance("config.txt");
+         this.nodeInfo = parser.nodes.get(nodeId);
+         connections = new TreeMap<>();
          startThreads();
     }
 
@@ -39,7 +46,7 @@ public class Process implements Runnable{
     public void run() {
         String threadName = Thread.currentThread().getName();
         if(threadName.equals(this.SERVER)){
-            
+            startServerThread();
         }
         else{
             startClientThread();
@@ -47,8 +54,37 @@ public class Process implements Runnable{
 
     }
 
+    private void startServerThread() {
+    }
+
     //The client thread needs to connect to every other process.
     private void startClientThread() {
+        parser.nodes.remove(nodeId);
+        parser.nodes.forEach((k, v ) -> {
+            int node = k;
+            String host = v.getHostName();
+            Integer port = v.getListenPort();
+            int retries = 0;
+            boolean connected = false;
+            System.out.println("sleeping");
+            while(!connected && retries < 3){
+            try {
+                retries++;
+                Thread.sleep(2000);
+                Socket socket = new Socket(host, port);
+                connections.put(node,socket);
+                connected = true;
+                System.out.println("connected");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            if(!connected){
+                System.out.println("som ting wong");
+                throw new Exception("som ting wong");
+            }
+            System.out.println(k+""+v);
+        });
     }
 
 }
