@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,6 +13,7 @@ public class Process implements Runnable{
     public static final String CLIENT = "Client";
     public static final String SERVER = "Server";
     private static Process instance = null;
+    private static Streams streams;
 
     public static Process getInstance(int nodeId) throws IOException {
         if(instance == null){
@@ -29,7 +31,8 @@ public class Process implements Runnable{
 
     private Process(int nodeId) throws IOException {
          parser = Parser.getInstance("config.txt");
-         this.nodeInfo = parser.nodes.get(nodeId);
+         nodeInfo = parser.nodes.get(nodeId);
+         streams = new Streams();
          connections = new TreeMap<>();
          startThreads();
     }
@@ -55,31 +58,42 @@ public class Process implements Runnable{
     }
 
     private void startServerThread() {
+        try{
+            ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
+            for()
+            Server server = new Server(serverSocket,streams);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
     }
 
     //The client thread needs to connect to every other process.
     private void startClientThread() {
+        Client client = new Client(nodeInfo, nodeId);
         parser.nodes.remove(nodeId);
         parser.nodes.forEach((k, v ) -> {
-            int node = k;
-            String host = v.getHostName();
-            Integer port = v.getListenPort();
-            try{
-                Socket socket = getClientConnection(host,port);
-                if(socket == null){
-                    System.out.println("unable to obtain socket connection");
-                    System.exit(0);
+            if(k != nodeId){
+                int node = k;
+                String host = v.getHostName();
+                Integer port = v.getListenPort();
+                try{
+                    Socket socket = getClientConnection(host,port);
+                    if(socket == null){
+                        System.out.println("unable to obtain socket connection");
+                        System.exit(0);
+                    }
+                    connections.put(node,socket);
                 }
-                connections.put(node,socket);
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
 
-            System.out.println("sleeping");
+                System.out.println("sleeping");
 
-            System.out.println(k+""+v);
-        });
+                System.out.println(k+""+v);
+            }});
     }
 
     private Socket getClientConnection(String host, int port) throws Exception{

@@ -60,7 +60,6 @@ public class Parser {
     public static void setGlobalVariables(){
         int []vars = new int[4];
        String[] globalVars = instance.configArray.get(0).split(" ");
-//       String [] globalVars = configLines[0].split(" ");
        for(int i = 0; i<globalVars.length;i++){
            vars[i] = Integer.parseInt(globalVars[i]);
        }
