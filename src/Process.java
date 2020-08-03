@@ -52,6 +52,7 @@ public class Process implements Runnable{
     }
 
     private void startServerThread() {
+        System.out.println("node"+nodeId+"Server thread hosting on:"+nodeInfo.getHostName()+"port:"+nodeInfo.getListenPort());
         try{
             ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
             for(int i = 0 ; i <parser.nodes.size()-1; i++){
@@ -68,7 +69,7 @@ public class Process implements Runnable{
     //The client thread needs to connect to every other process.
     private void startClientThread() {
         parser.nodes.forEach((k, v ) -> {
-            System.out.println(v.hostName+"host, port:"+v.getListenPort()+ "This node:"+this.nodeId);
+            System.out.println("Target Node:"+k+"Client thread connecting to:"+v.hostName+"host, port:"+v.getListenPort()+ "This node:"+this.nodeId);
             if(k != nodeId){
                 try {
                     Thread.sleep(5000);
