@@ -75,15 +75,16 @@ public class Process implements Runnable{
                     System.exit(-1);
                 }
                 Client client = new Client(v,nodeId, k ,streams);
-//                System.out.println("Does Node "+nodeId+" have clientSocket?" +streams.getClientSockets().get(k)==null );
+//                System.out.println("Does Node "+nodeId+" have clientSocket?" );
+//                System.out.println("******\n"+streams.getClientSockets().get(k)==null)
 
             }});
         //every client is connected.
-//        System.out.println(nodeId+"Every client is connected? Lets make sure.");
-//        System.out.println(nodeId+" Node has these client sockets:");
-//        System.out.println(streams.getClientSockets().keySet());
-//        System.out.println(nodeId+ "Node has these servers sockets:");
-//        System.out.println(streams.getServerSockets().keySet());
+        System.out.println(nodeId+"Every client is connected? Lets make sure.");
+        System.out.println(nodeId+" Node has these client sockets:");
+        System.out.println(streams.getClientSockets().keySet());
+        System.out.println(nodeId+ "Node has these servers sockets:");
+        System.out.println(streams.getServerSockets().keySet());
 //        streams.getClientSockets().forEach((key, value) -> {
 //            System.out.println(key+ "node and what is the socket?"+value);
 //        });
