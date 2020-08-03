@@ -74,6 +74,7 @@ public class Streams {
     public static void main(String args[]){
         Map<Integer, String> map = new ConcurrentHashMap<>();
         map.put(1,"lmao");
+        System.out.println(map.keySet());
         System.out.println(map.get(1));
         System.out.println(map.get(2));
     }
