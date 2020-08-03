@@ -66,7 +66,7 @@ public class Process implements Runnable{
     //The client thread needs to connect to every other process.
     private void startClientThread() {
         parser.nodes.forEach((k, v ) -> {
-            System.out.println(v.hostName+"host, port:"+v.getListenPort());
+            System.out.println(v.hostName+"host, port:"+v.getListenPort()+ "This node:"+this.nodeId);
             if(k != nodeId){
                 try {
                     Thread.sleep(1000);
