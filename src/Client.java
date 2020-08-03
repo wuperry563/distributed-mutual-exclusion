@@ -37,7 +37,10 @@ public class Client implements Runnable{
                 this.streams.getClientOutputStreams().put(this.serverId, out);
                 this.streams.getClientSockets().put(this.id, socket);
             } catch (Exception e) {
-                e.printStackTrace();
+                retries++;
+                if(retries > 3){
+                    System.exit(0);
+                }
             }
             finally{
                 retries++;
