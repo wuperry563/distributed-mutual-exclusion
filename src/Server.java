@@ -24,11 +24,8 @@ public class Server implements Runnable {
         ObjectOutputStream out = null;
         try {
             Socket socket = this.serverSocket.accept();
-            System.out.println("server accepted");
             in = new ObjectInputStream(socket.getInputStream());
-            System.out.println("in");
             out = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("out");
             Message m = (Message) in.readObject();
             int clientNode = m.getNodeId();
             streams.getServerInputStreams().put(clientNode,in);

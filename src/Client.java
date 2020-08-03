@@ -32,7 +32,6 @@ public class Client implements Runnable{
                 Message message = new Message();
                 message.setNodeId(this.id);
                 out.writeObject(message);
-                System.out.println(id+"Written object, adding streams");
                 this.streams.getClientInputStreams().put(this.serverId, in);
                 this.streams.getClientOutputStreams().put(this.serverId, out);
                 this.streams.getClientSockets().put(this.serverId, socket);
