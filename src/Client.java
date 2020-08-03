@@ -22,9 +22,9 @@ public class Client implements Runnable{
     public void run() {
         int retries = 0;
         boolean connected = false;
-        while(retries < 3 && !connected) {
+        while(retries < 10 && !connected) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
                 Socket socket = new Socket(this.nodeInfo.hostName, this.nodeInfo.getListenPort());
                 connected = true;
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -36,9 +36,9 @@ public class Client implements Runnable{
                 this.streams.getClientOutputStreams().put(this.serverId, out);
                 this.streams.getClientSockets().put(this.serverId, socket);
             } catch (Exception e) {
-                retries++;
                 System.out.println(this.id+"Client Unable to connect to"+this.serverId);
-                if(retries > 3){
+                System.out.println("retries:"+retries);
+                if(retries > 10){
                     System.exit(-1);
                 }
             }
