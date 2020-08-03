@@ -21,15 +21,9 @@ public class Process implements Runnable{
         }
         return instance;
     }
-    public int getNodeId() {
-        return nodeId;
-    }
-
-    public void setNodeId(int nodeId) {
-        this.nodeId = nodeId;
-    }
 
     private Process(int nodeId) throws IOException {
+        this.nodeId = nodeId;
          parser = Parser.getInstance("config.txt");
          nodeInfo = parser.nodes.get(nodeId);
          streams = new Streams();
@@ -60,61 +54,52 @@ public class Process implements Runnable{
     private void startServerThread() {
         try{
             ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
-            for()
-            Server server = new Server(serverSocket,streams);
+            for(int i = 0 ; i <parser.nodes.size()-1; i++){
+                Server server = new Server(serverSocket,streams);
+            }
         }catch(Exception e){
             e.printStackTrace();
             System.exit(-1);
         }
-
     }
 
     //The client thread needs to connect to every other process.
     private void startClientThread() {
-        Client client = new Client(nodeInfo, nodeId);
-        parser.nodes.remove(nodeId);
         parser.nodes.forEach((k, v ) -> {
             if(k != nodeId){
-                int node = k;
-                String host = v.getHostName();
-                Integer port = v.getListenPort();
-                try{
-                    Socket socket = getClientConnection(host,port);
-                    if(socket == null){
-                        System.out.println("unable to obtain socket connection");
-                        System.exit(0);
+                while(streams.getClientSockets().get(k) == null ){
+                    try{
+                        Thread.sleep(1000);
+                        Client client = new Client(v,nodeId, k ,streams);
                     }
-                    connections.put(node,socket);
+                    catch(Exception e){
+                        e.printStackTrace();
+                        System.exit(-1);
+                    }
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
-
-                System.out.println("sleeping");
-
-                System.out.println(k+""+v);
             }});
+        //every client is connected.
     }
 
-    private Socket getClientConnection(String host, int port) throws Exception{
-        int retries = 0;
-        boolean connected = false;
-        Socket socket = null;
-        while(!connected && retries < 3){
-            try {
-                retries++;
-                Thread.sleep(2000);
-                socket = new Socket(host, port);
-                connected = true;
-                System.out.println("connected");
-            }   catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        if(socket == null){
-            return null;
-        }
-        return socket;
-    }
+//    private Socket getClientConnection(String host, int port) throws Exception{
+//        int retries = 0;
+//        boolean connected = false;
+//        Socket socket = null;
+//        while(!connected && retries < 3){
+//            try {
+//                retries++;
+//                Thread.sleep(2000);
+//                socket = new Socket(host, port);
+//                connected = true;
+//                System.out.println("connected");
+//            }   catch(Exception e){
+//                e.printStackTrace();
+//            }
+//        }
+//        if(socket == null){
+//            return null;
+//        }
+//        return socket;
+//    }
 
 }

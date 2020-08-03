@@ -1,5 +1,6 @@
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -7,11 +8,31 @@ public class Streams {
 
     private Map<Integer, ObjectInputStream> serverInputStreams;
     private Map<Integer, ObjectOutputStream> serverOutputStreams;
+    private Map<Integer, Socket> clientSockets;
+    private Map<Integer, Socket> serverSockets;
+
+    public Map<Integer, Socket> getClientSockets() {
+        return clientSockets;
+    }
+
+    public void setClientSockets(Map<Integer, Socket> clientSockets) {
+        this.clientSockets = clientSockets;
+    }
+
+    public Map<Integer, Socket> getServerSockets() {
+        return serverSockets;
+    }
+
+    public void setServerSockets(Map<Integer, Socket> serverSockets) {
+        this.serverSockets = serverSockets;
+    }
 
     private Map<Integer, ObjectInputStream> clientInputStreams;
     private Map<Integer, ObjectOutputStream> clientOutputStreams;
 
     public Streams(){
+        clientSockets = new ConcurrentHashMap<>();
+        serverSockets = new ConcurrentHashMap<>();
         serverInputStreams = new ConcurrentHashMap<>();
         serverOutputStreams = new ConcurrentHashMap<>();
         clientInputStreams = new ConcurrentHashMap<>();

@@ -20,7 +20,6 @@ public class Server implements Runnable {
 
 
     public void run(){
-        System.out.println("attempting ");
         ObjectInputStream in = null;
         ObjectOutputStream out = null;
         try {
@@ -34,6 +33,7 @@ public class Server implements Runnable {
             int clientNode = m.getNodeId();
             streams.getServerInputStreams().put(clientNode,in);
             streams.getServerOutputStreams().put(clientNode,out);
+            streams.getServerSockets().put(clientNode, socket);
             System.out.println("streams set for node "+clientNode);
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,29 +49,29 @@ public class Server implements Runnable {
                 Server server = new Server(serverSocket, new Streams());
             }
 //        });
-        for(int i = 0 ; i<3; i++){
-            System.out.println("aslkdfj");
-            int retries = 0;
-            boolean connected = false;
-            while(retries < 3 && !connected) {
-                try {
-                    Thread.sleep(1000);
-                    Socket socket = new Socket("localhost", nodeInfo.getListenPort());
-                    connected = true;
-                    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                    Message message = new Message();
-                    message.setNodeId(1);
-                    message.setMessage("lmao");
-                    out.writeObject(message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                finally{
-                    retries++;
-                }
-            }
-            System.out.println("break");
-        }
+//        for(int i = 0 ; i<3; i++){
+//            System.out.println("aslkdfj");
+//            int retries = 0;
+//            boolean connected = false;
+//            while(retries < 3 && !connected) {
+//                try {
+//                    Thread.sleep(1000);
+//                    Socket socket = new Socket("localhost", nodeInfo.getListenPort());
+//                    connected = true;
+//                    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+//                    ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+//                    Message message = new Message();
+//                    message.setNodeId(1);
+//                    message.setMessage("lmao");
+//                    out.writeObject(message);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                finally{
+//                    retries++;
+//                }
+//            }
+//            System.out.println("break");
+//        }
     }
 }
