@@ -72,24 +72,20 @@ public class Process implements Runnable{
         parser.nodes.forEach((k, v ) -> {
             System.out.println("Target Node:"+k+"Client thread connecting to:"+v.hostName+"host, port:"+v.getListenPort()+ "This node:"+this.nodeId);
             if(k != nodeId){
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    System.exit(-1);
-                }
                 Client client = new Client(v,nodeId, k ,streams);
-//                System.out.println("Does Node "+nodeId+" have clientSocket?" );
-//                System.out.println("******\n"+streams.getClientSockets().get(k)==null)
+                while(!client.isConnected)
+                {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }});
         //every client is connected.
         System.out.println(nodeId+"Every client is connected? Lets make sure.");
         System.out.println(nodeId+" Node has these client sockets:");
         System.out.println(streams.getClientSockets().keySet());
-
-//        streams.getClientSockets().forEach((key, value) -> {
-//            System.out.println(key+ "node and what is the socket?"+value);
-//        });
 
     }
 
