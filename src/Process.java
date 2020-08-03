@@ -54,6 +54,7 @@ public class Process implements Runnable{
     private void startServerThread() {
         System.out.println("node"+nodeId+"Server thread hosting on:"+nodeInfo.getHostName()+"port:"+nodeInfo.getListenPort());
         try{
+            System.out.println("nodesize"+parser.nodes.size());
             ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
             for(int i = 0 ; i <parser.nodes.size(); i++){
                 Server server = new Server(serverSocket,streams,nodeId);
