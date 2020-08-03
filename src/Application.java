@@ -12,6 +12,7 @@ public class Application {
         int nodeId = Integer.parseInt(args[0]);
         String configLocation = args[1];
         Parser p = Parser.getInstance(configLocation);
+        System.out.println("node running with node id "+nodeId);
         Process process = Process.getInstance(nodeId);
     }
 }

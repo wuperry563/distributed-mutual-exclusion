@@ -67,24 +67,22 @@ public class Process implements Runnable{
     private void startClientThread() {
         parser.nodes.forEach((k, v ) -> {
             if(k != nodeId){
-                while(streams.getClientSockets().get(k) == null ){
-                    try{
-                        Thread.sleep(1000);
-                        Client client = new Client(v,nodeId, k ,streams);
-                    }
-                    catch(Exception e){
-                        e.printStackTrace();
-                        System.exit(-1);
-                    }
-
-                    System.out.println("Does Node "+nodeId+" have clientSocket?" +streams.getClientSockets().get(k)==null );
-                    streams.getClientSockets().forEach((key, value) -> {
-                        System.out.println(key+ "node and what is the socket?"+value);
-                    });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    System.exit(-1);
                 }
+                Client client = new Client(v,nodeId, k ,streams);
+                System.out.println("Does Node "+nodeId+" have clientSocket?" +streams.getClientSockets().get(k)==null );
+
             }});
         //every client is connected.
-        System.out.println(nodeId+"Every client is connected");
+        System.out.println(nodeId+"Every client is connected? Lets make sure.");
+        streams.getClientSockets().forEach((key, value) -> {
+            System.out.println(key+ "node and what is the socket?"+value);
+        });
+
     }
 
 //    private Socket getClientConnection(String host, int port) throws Exception{
