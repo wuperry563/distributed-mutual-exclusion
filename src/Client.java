@@ -24,7 +24,7 @@ public class Client implements Runnable{
         boolean connected = false;
         while(retries < 10 && !connected) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
                 Socket socket = new Socket(this.nodeInfo.hostName, this.nodeInfo.getListenPort());
                 connected = true;
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());

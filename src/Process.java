@@ -55,7 +55,7 @@ public class Process implements Runnable{
         try{
             ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
             for(int i = 0 ; i <parser.nodes.size()-1; i++){
-                Server server = new Server(serverSocket,streams);
+                Server server = new Server(serverSocket,streams,nodeId);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -71,7 +71,7 @@ public class Process implements Runnable{
             System.out.println(v.hostName+"host, port:"+v.getListenPort()+ "This node:"+this.nodeId);
             if(k != nodeId){
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     System.exit(-1);

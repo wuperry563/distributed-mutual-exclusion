@@ -10,10 +10,11 @@ import java.net.Socket;
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Streams streams;
-
-    public Server(ServerSocket serverSocket, Streams streams) {
+    private int nodeId;
+    public Server(ServerSocket serverSocket, Streams streams, int nodeId) {
         this.serverSocket = serverSocket;
         this.streams = streams;
+        this.nodeId = nodeId;
         Thread t = new Thread(this);
         t.start();
     }
@@ -31,7 +32,7 @@ public class Server implements Runnable {
             streams.getServerInputStreams().put(clientNode,in);
             streams.getServerOutputStreams().put(clientNode,out);
             streams.getServerSockets().put(clientNode, socket);
-            System.out.println("streams set for node "+clientNode);
+            System.out.println("servernode:"+nodeId+"streams set for client node "+clientNode);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,7 +44,7 @@ public class Server implements Runnable {
         ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
             for(int i = 0 ; i< 2; i++){
                 System.out.println("HostPort+ " +nodeInfo.getListenPort());
-                Server server = new Server(serverSocket, new Streams());
+                Server server = new Server(serverSocket, new Streams(),1);
             }
 //        });
 //        for(int i = 0 ; i<3; i++){
