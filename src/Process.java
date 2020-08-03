@@ -84,6 +84,7 @@ public class Process implements Runnable{
                 }
             }});
         //every client is connected.
+        System.out.println(nodeId+"Every client is connected");
     }
 
 //    private Socket getClientConnection(String host, int port) throws Exception{

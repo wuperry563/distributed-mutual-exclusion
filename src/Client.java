@@ -39,7 +39,7 @@ public class Client implements Runnable{
             } catch (Exception e) {
                 retries++;
                 if(retries > 3){
-                    System.exit(0);
+                    System.exit(-1);
                 }
             }
             finally{
