@@ -86,6 +86,7 @@ public class Process implements Runnable{
         System.out.println(nodeId+"Every client is connected? Lets make sure.");
         System.out.println(nodeId+" Node has these client sockets:");
         System.out.println(streams.getClientSockets().keySet());
+        System.out.println("Server keyset"+streams.getServerSockets().keySet());
 
     }
 
