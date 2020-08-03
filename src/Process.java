@@ -55,7 +55,7 @@ public class Process implements Runnable{
         System.out.println("node"+nodeId+"Server thread hosting on:"+nodeInfo.getHostName()+"port:"+nodeInfo.getListenPort());
         try{
             ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
-            for(int i = 0 ; i <parser.nodes.size()-1; i++){
+            for(int i = 0 ; i <parser.nodes.size(); i++){
                 Server server = new Server(serverSocket,streams,nodeId);
             }
         }catch(Exception e){
