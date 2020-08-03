@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="distributed-computing-protocol:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/distributed_computing_protocol_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/</output-path>
     <root id="archive" name="distributed-computing-protocol.jar">
       <element id="module-output" name="distributed-computing-protocol" />
     </root>
