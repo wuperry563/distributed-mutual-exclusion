@@ -76,6 +76,11 @@ public class Process implements Runnable{
                         e.printStackTrace();
                         System.exit(-1);
                     }
+
+                    System.out.println("Does Node "+nodeId+" have clientSocket?" +streams.getClientSockets().get(k)==null );
+                    streams.getClientSockets().forEach((key, value) -> {
+                        System.out.println(key+ "node and what is the socket?"+value);
+                    });
                 }
             }});
         //every client is connected.
