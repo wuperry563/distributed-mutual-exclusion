@@ -40,12 +40,11 @@ public class Modules implements Runnable{
 
         this.streams = Streams.getInstance();
         this.nodeId = nodeId;
-        Thread top = new Thread(this);
-        top.setName(this.TOP);
-        Thread bot = new Thread(this);
-        bot.setName(this.BOTTOM);
-        top.start();
-        bot.start();
+        for(int i = 0 ; i<10; i++){
+            Thread top = new Thread(this);
+            top.setName(this.TOP);
+            top.start();
+        }
     }
 
     @Override
@@ -76,10 +75,8 @@ public class Modules implements Runnable{
     private void executeTopThread() {
         System.out.println("top");
         //generate crit section requests and execute on receiving permission.
-        for(int i = 0 ; i<10; i++){
-            csEnter();
-            csLeave();
-        }
+        csEnter();
+        csLeave();
     }
 
     private void csEnter() {
