@@ -33,7 +33,7 @@ public class Server implements Runnable {
             streams.getServerOutputStreams().put(clientNode,out);
             streams.getServerSockets().put(clientNode, socket);
             System.out.println("servernode:"+nodeId+"streams set for client node "+clientNode);
-            MessageListener listener = new MessageListener(in);
+            MessageListener listener = new MessageListener(in,out,nodeId);
         } catch (Exception e) {
             e.printStackTrace();
         }
