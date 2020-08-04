@@ -27,6 +27,7 @@ public class Modules implements Runnable{
 
     public Modules(Streams streams, int nodeId) {
         this.streams = streams;
+        this.nodeId = nodeId;
         Thread top = new Thread(this);
         top.setName(this.TOP);
         Thread bot = new Thread(this);
