@@ -7,18 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfcbbd56-cf34-4ae2-8eae-366750142358" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/MessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/MessageListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Modules.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Modules.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/PollingMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/PollingMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/RequestMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/RequestMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modules.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PollingMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PollingMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Process.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RequestMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Streams.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

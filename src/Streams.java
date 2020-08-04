@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Streams {
@@ -24,7 +25,7 @@ public class Streams {
     }
 
     private Streams(){
-        this.criticalSectionQueue = new PriorityBlockingQueue<>();
+        this.criticalSectionQueue = new ConcurrentLinkedQueue<>();
         RequestMessageComparator comparator = new RequestMessageComparator();
         requestQueue = new PriorityBlockingQueue<>(16,comparator);
         clientSockets = new ConcurrentHashMap<>();
