@@ -6,18 +6,14 @@ public class Message implements Serializable {
     private int nodeId;
     private Timestamp timestamp;
 
-    public Message(String message, int nodeId, Timestamp timestamp) {
+    public Message(String message, int nodeId) {
         this.message = message;
         this.nodeId = nodeId;
-        this.timestamp = timestamp;
+        this.timestamp = new Timestamp(System.currentTimeMillis());
     }
 
     public Timestamp getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
     }
 
     public Message() {

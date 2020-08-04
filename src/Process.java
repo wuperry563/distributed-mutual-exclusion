@@ -93,10 +93,10 @@ public class Process implements Runnable{
                 }
             }});
         //every client is connected.
-        System.out.println(nodeId+"Every client is connected? Lets make sure.");
-        System.out.println(nodeId+" Node has these client sockets:");
-        System.out.println(streams.getClientSockets().keySet());
-        System.out.println("Server keyset"+streams.getServerSockets().keySet());
+//        System.out.println(nodeId+"Every client is connected? Lets make sure.");
+//        System.out.println(nodeId+" Node has these client sockets:");
+//        System.out.println(streams.getClientSockets().keySet());
+//        System.out.println("Server keyset"+streams.getServerSockets().keySet());
         //this is where everything is ready.
         ready = true;
 

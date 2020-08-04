@@ -78,8 +78,7 @@ public class Modules implements Runnable{
     }
 
     private void csEnter() {
-        Timestamp t = new Timestamp(System.currentTimeMillis());
-        RequestMessage request = new RequestMessage("",this.nodeId, t);
+        RequestMessage request = new RequestMessage("",this.nodeId);
         this.streams.getRequestQueue().add(request);
         //TODO: implement/utilize Num requests, inter request delay
         sendRequestToAllNodes(request);
@@ -97,6 +96,7 @@ public class Modules implements Runnable{
             }
         }
         //can now execute?
+        System.out.println(this.streams.getRequestQueue().peek().getNodeId()+"Is in my request queue");
         System.out.println(this.nodeId+"can now execute");
         executeCriticalSection();
     }
@@ -109,7 +109,6 @@ public class Modules implements Runnable{
                try {
                    out.writeObject(requestMessage);
                    Message m = (Message)in.readObject();
-                   System.out.println(this.nodeId+"Read Message from server"+m.getMessage());
                } catch (IOException | ClassNotFoundException e) {
                    e.printStackTrace();
                }
@@ -124,7 +123,14 @@ public class Modules implements Runnable{
     private void executeCriticalSection() {
         try {
             assertIsOnlyCriticalSection();
+            System.out.println(nodeId+" adding locking critical section");
+            NodeInfo info = parser.nodes.get(this.nodeId);
+            this.streams.getCriticalSectionQueue().add(info);
             Thread.sleep(parser.meanCS);
+            //finish executing
+            System.out.println(nodeId+" unlocking critical section");
+            this.streams.getCriticalSectionQueue().clear();
+            this.streams.getRequestQueue().poll();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -133,7 +139,7 @@ public class Modules implements Runnable{
 
     //make sure is first request, poll other servers to see if it's the only request?
     private void assertIsOnlyCriticalSection() {
-        Message poll = new PollingMessage("lmao",this.nodeId,new Timestamp(System.currentTimeMillis()));
+        Message poll = new PollingMessage("lmao",this.nodeId);
         Parser.nodes.forEach((k,v)->{
             if(k != this.nodeId){
                 ObjectInputStream in = streams.getClientInputStreams().get(k);
@@ -167,9 +173,9 @@ public class Modules implements Runnable{
         Timestamp t = new Timestamp(System.currentTimeMillis());
         Thread.sleep(10);
         Timestamp t2 = new Timestamp(System.currentTimeMillis());
-        RequestMessage r1 = new RequestMessage("",1,t);
-        RequestMessage r2 = new RequestMessage("",2, t);
-        RequestMessage r3 = new RequestMessage("",1, t2);
+        RequestMessage r1 = new RequestMessage("",1);
+        RequestMessage r2 = new RequestMessage("",2);
+        RequestMessage r3 = new RequestMessage("",1);
         RequestMessageComparator comparator = new RequestMessageComparator();
         Queue<RequestMessage> requestQueue = new PriorityBlockingQueue<>(16,comparator);
         requestQueue.add(r1);

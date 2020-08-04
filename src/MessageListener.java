@@ -25,7 +25,6 @@ public class MessageListener implements Runnable{
     public void run(){
         try {
             Message m = (Message) in.readObject();
-            System.out.println("message is from" + m.getNodeId());
             processMessage(m);
             Thread t = new Thread(this);
             t.run();
