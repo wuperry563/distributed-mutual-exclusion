@@ -88,16 +88,9 @@ public class Modules implements Runnable{
         });
         Message m = new ReleaseMessage("",this.nodeId);
         this.sendMessageToAllNodes(m);
-        checkTerminationCondition();
     }
 
-    private void checkTerminationCondition() {
-        if(streams.getRequestQueue().isEmpty()){
-            System.out.println(nodeId+"Finished, closing from message csleave:");
-            streams.terminateAllStreams();
-            System.exit(0);
-        }
-    }
+
 
     private void attemptExecution() {
         boolean canExecute = canExecuteCriticalSection();
