@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -109,5 +110,50 @@ public class Streams {
         System.out.println(map.keySet());
         System.out.println(map.get(1));
         System.out.println(map.get(2));
+    }
+
+    public void terminateAllStreams() {
+        clientInputStreams.forEach((k,v)->{
+            try {
+                v.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        clientOutputStreams.forEach((k,v)->{
+            try {
+                v.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        clientSockets.forEach((k,v)->{
+            try {
+                v.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        serverInputStreams.forEach((k,v)->{
+            try {
+                v.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        serverOutputStreams.forEach((k,v)->{
+            try {
+                v.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        serverSockets.forEach((k,v)->{
+            try {
+                v.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

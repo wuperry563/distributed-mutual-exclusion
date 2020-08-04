@@ -47,11 +47,9 @@ public class MessageListener implements Runnable{
         else if(m instanceof PollingMessage){
             Message resp;
             if(!this.streams.getCriticalSectionQueue().isEmpty()){
-                System.out.println(nodeId+" node is in critical section");
                  resp = new PollResponseMessage(this.nodeId,true);
             }
             else{
-                System.out.println(nodeId+" node is NOT in critical section!");
                 resp = new PollResponseMessage(this.nodeId,false);
             }
             out.writeObject(resp);
@@ -62,7 +60,16 @@ public class MessageListener implements Runnable{
             System.out.println(req.getNodeId()  + " has been removed");
             Message response = new AckMessage("",this.nodeId);
             out.writeObject(response);
+            evaluateTermination();
         }
 
+    }
+
+    private void evaluateTermination() {
+        if(streams.getRequestQueue().isEmpty()){
+            System.out.println(nodeId+"Finished, closing from message listener:");
+            streams.terminateAllStreams();
+            System.exit(0);
+        }
     }
 }
