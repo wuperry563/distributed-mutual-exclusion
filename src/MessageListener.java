@@ -14,6 +14,8 @@ public class MessageListener implements Runnable{
         t.run();
     }
 
+    //read object is blocking.
+    //I need multiple reading at the same time foreach of objectinput stream.
     public void run(){
         try {
             Message m = (Message) in.readObject();
