@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.sql.Timestamp;
 
 public class MessageListener implements Runnable{
 
@@ -40,7 +39,7 @@ public class MessageListener implements Runnable{
     private void processMessage(Message m) throws IOException {
         if(m instanceof RequestMessage){
             this.streams.getRequestQueue().add((RequestMessage) m);
-            Message ack = new AckMessage();
+            Message ack = new AckMessage("",this.nodeId);
             ack.setNodeId(this.nodeId);
             ack.setMessage("beepis");
             out.writeObject(ack);
@@ -56,6 +55,13 @@ public class MessageListener implements Runnable{
                 resp = new PollResponseMessage(this.nodeId,false);
             }
             out.writeObject(resp);
+        }
+        //received release. poll first from pqueue
+        else if(m instanceof ReleaseMessage){
+            RequestMessage req = streams.getRequestQueue().poll();
+            System.out.println(req.getNodeId()  + " has been removed");
+            Message response = new AckMessage("",this.nodeId);
+            out.writeObject(response);
         }
 
     }

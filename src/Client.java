@@ -29,8 +29,7 @@ public class Client implements Runnable{
                 Socket socket = new Socket(this.nodeInfo.hostName, this.nodeInfo.getListenPort());
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                Message message = new Message();
-                message.setNodeId(this.id);
+                Message message = new Message("",this.id);
                 out.writeObject(message);
                 this.streams.getClientInputStreams().put(this.serverId, in);
                 this.streams.getClientOutputStreams().put(this.serverId, out);

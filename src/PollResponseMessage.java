@@ -13,7 +13,7 @@ public class PollResponseMessage extends Message{
     }
 
     public PollResponseMessage(int nodeId, boolean executingCritical){
-        this.setNodeId(nodeId);
+        super("",nodeId);
         this.executingCritical = executingCritical;
     }
 

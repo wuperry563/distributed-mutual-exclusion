@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -81,7 +83,7 @@ public class Modules implements Runnable{
         RequestMessage request = new RequestMessage("",this.nodeId);
         this.streams.getRequestQueue().add(request);
         //TODO: implement/utilize Num requests, inter request delay
-        sendRequestToAllNodes(request);
+        sendMessageToAllNodes(request);
         attemptExecution();
     }
 
@@ -101,19 +103,22 @@ public class Modules implements Runnable{
         executeCriticalSection();
     }
 
-    private void sendRequestToAllNodes(RequestMessage requestMessage) {
+    private List<Message> sendMessageToAllNodes(Message message) {
+        List<Message> messages = new ArrayList<>();
        Parser.nodes.forEach((k,v)->{
            if(k != this.nodeId){
                ObjectInputStream in = streams.getClientInputStreams().get(k);
                ObjectOutputStream out = streams.getClientOutputStreams().get(k);
                try {
-                   out.writeObject(requestMessage);
+                   out.writeObject(message);
                    Message m = (Message)in.readObject();
+                   messages.add(m);
                } catch (IOException | ClassNotFoundException e) {
                    e.printStackTrace();
                }
            }
        });
+       return messages;
     }
 
     //TODO: use cs-execution time, thread sleep that.
@@ -131,31 +136,25 @@ public class Modules implements Runnable{
             System.out.println(nodeId+" unlocking critical section");
             this.streams.getCriticalSectionQueue().clear();
             this.streams.getRequestQueue().poll();
-        } catch (InterruptedException e) {
+            Message m = new ReleaseMessage("",this.nodeId);
+            this.sendMessageToAllNodes(m);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
     //make sure is first request, poll other servers to see if it's the only request?
-    private void assertIsOnlyCriticalSection() {
+    private void assertIsOnlyCriticalSection() throws Exception{
         Message poll = new PollingMessage("lmao",this.nodeId);
-        Parser.nodes.forEach((k,v)->{
-            if(k != this.nodeId){
-                ObjectInputStream in = streams.getClientInputStreams().get(k);
-                ObjectOutputStream out = streams.getClientOutputStreams().get(k);
-                try {
-                    out.writeObject(poll);
-                    PollResponseMessage m = (PollResponseMessage)in.readObject();
-                    if(m.isExecutingCritical()){
-                        System.out.println("VIOLATES TEST: NODE ID"+m.getNodeId()+" IS ALSO EXECUTING CRITICAL SECTION");
-                    }
-                    System.out.println(this.nodeId+"Read Message from server"+m.getMessage());
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+        List<Message> responses = sendMessageToAllNodes(poll);
+        for(Message m : responses){
+            PollResponseMessage resp = (PollResponseMessage)m;
+            if(resp.isExecutingCritical()){
+                throw new Exception("FATAL: " +resp.getNodeId() + " IS ALSO EXECUTING CRITICAL SECTION");
             }
-        });
+        }
+
     }
 
     private boolean canExecuteCriticalSection() {

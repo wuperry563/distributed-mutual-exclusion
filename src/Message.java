@@ -12,12 +12,11 @@ public class Message implements Serializable {
         this.timestamp = new Timestamp(System.currentTimeMillis());
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    private Message(){
     }
 
-    public Message() {
-        this.message = "";
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
     public int getNodeId() {

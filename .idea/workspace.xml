@@ -7,7 +7,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfcbbd56-cf34-4ae2-8eae-366750142358" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Streams.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ReleaseMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/AckMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/AckMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/MessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/MessageListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Modules.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Modules.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/PollResponseMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/PollResponseMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AckMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AckMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PollResponseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PollResponseMessage.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +74,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Modules">
+  <component name="RunManager" selected="Application.AckMessage">
+    <configuration name="AckMessage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AckMessage" />
+      <module name="distributed-computing-protocol" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client" />
       <module name="distributed-computing-protocol" />
@@ -83,13 +103,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Server" />
-      <module name="distributed-computing-protocol" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Streams" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Streams" />
       <module name="distributed-computing-protocol" />
@@ -99,11 +112,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AckMessage" />
         <item itemvalue="Application.Modules" />
         <item itemvalue="Application.Parser" />
         <item itemvalue="Application.Streams" />
         <item itemvalue="Application.Client" />
-        <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
   </component>
@@ -143,12 +156,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Modules.java</url>
-          <line>188</line>
+          <line>187</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Modules.java</url>
-          <line>179</line>
+          <line>178</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
