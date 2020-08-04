@@ -13,6 +13,8 @@ public class Modules implements Runnable{
     public static final String BOTTOM = "bottom";
     private int nodeId;
     private Parser parser;
+    private Timestamp timeEnter;
+    private Timestamp timeExit;
 
     public int getNodeId() {
         return nodeId;
@@ -40,9 +42,11 @@ public class Modules implements Runnable{
 
         this.streams = Streams.getInstance();
         this.nodeId = nodeId;
-        Thread top = new Thread(this);
-        top.setName(this.TOP);
-        top.start();
+        for(int i=0; i < parser.numRequests; i++ ){
+            Thread top = new Thread(this);
+            top.setName(this.TOP);
+            top.start();
+        }
     }
 
     @Override
@@ -58,22 +62,19 @@ public class Modules implements Runnable{
     private void executeTopThread() {
         System.out.println("top");
         //generate crit section requests and execute on receiving permission.
-        for(int i = 0; i<parser.numRequests; i++){
-            try {
-                Thread.sleep(Parser.requestDelay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            csEnter();
-            csLeave();
-        }
-
+        csEnter();
+        csLeave();
     }
 
     private void csEnter() {
+        try {
+            Thread.sleep(Parser.requestDelay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         RequestMessage request = new RequestMessage("",this.nodeId);
+        timeEnter = new Timestamp(System.currentTimeMillis());
         this.streams.getRequestQueue().add(request);
-        //TODO: implement/utilize Num requests, inter request delay
         sendMessageToAllNodes(request);
         attemptExecution();
     }
@@ -88,8 +89,12 @@ public class Modules implements Runnable{
         });
         Message m = new ReleaseMessage("",this.nodeId);
         this.sendMessageToAllNodes(m);
+        timeExit = new Timestamp(System.currentTimeMillis());
+        calculateTimeToExecute();
     }
 
+    private void calculateTimeToExecute() {
+    }
 
 
     private void attemptExecution() {
@@ -126,10 +131,9 @@ public class Modules implements Runnable{
        return messages;
     }
 
-    //TODO: use cs-execution time, thread sleep that.
-    //TODO: have a test here to ensure only one crit at a time?
-    //TODO: then remove own request from queue
-    //TODO: then send release messages to everyone.
+    //TODO: Where to log writer?
+    //TODO: Singleton Streams class to write to a log file given node id.
+    //TODO: Average Time difference between sent, and able to execute?
     private void executeCriticalSection() {
         try {
             assertIsOnlyCriticalSection();

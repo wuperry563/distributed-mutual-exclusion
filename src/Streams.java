@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Map;
-import java.util.Queue;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -16,6 +16,7 @@ public class Streams {
     private Map<Integer, Socket> serverSockets;
     private Queue<RequestMessage> requestQueue;
     private Queue<NodeInfo> criticalSectionQueue;
+    private List<Timestamp> timestamps;
     private static Streams instance;
 
     public static Streams getInstance(){
@@ -25,8 +26,17 @@ public class Streams {
         return instance;
     }
 
+    public List<Timestamp> getTimestamps() {
+        return timestamps;
+    }
+
+    public void setTimestamps(List<Timestamp> timestamps) {
+        this.timestamps = timestamps;
+    }
+
     private Streams(){
         this.criticalSectionQueue = new ConcurrentLinkedQueue<>();
+        this.timestamps = Collections.synchronizedList(new ArrayList<Timestamp>());
         RequestMessageComparator comparator = new RequestMessageComparator();
         requestQueue = new PriorityBlockingQueue<>(16,comparator);
         clientSockets = new ConcurrentHashMap<>();
