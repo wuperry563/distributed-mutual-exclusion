@@ -66,7 +66,9 @@ public class Modules implements Runnable{
             csEnter();
             csLeave();
             timeExit = new Timestamp(System.currentTimeMillis());
-            int ms = timeEnter.compareTo(timeExit);
+            long in = timeEnter.getTime();
+            long out = timeExit.getTime();
+            long ms = out - in ;
             System.out.println("execution took "+ms+"milliseconds");
         }
 
