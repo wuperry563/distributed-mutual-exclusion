@@ -2,7 +2,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class Streams {
 
@@ -10,6 +12,15 @@ public class Streams {
     private Map<Integer, ObjectOutputStream> serverOutputStreams;
     private Map<Integer, Socket> clientSockets;
     private Map<Integer, Socket> serverSockets;
+    private Queue<RequestMessage> requestQueue;
+
+    public Queue<RequestMessage> getRequestQueue() {
+        return requestQueue;
+    }
+
+    public void setRequestQueue(Queue<RequestMessage> requestQueue) {
+        this.requestQueue = requestQueue;
+    }
 
     public Map<Integer, Socket> getClientSockets() {
         return clientSockets;
@@ -31,6 +42,7 @@ public class Streams {
     private Map<Integer, ObjectOutputStream> clientOutputStreams;
 
     public Streams(){
+        requestQueue = new PriorityBlockingQueue<>();
         clientSockets = new ConcurrentHashMap<>();
         serverSockets = new ConcurrentHashMap<>();
         serverInputStreams = new ConcurrentHashMap<>();
@@ -73,7 +85,6 @@ public class Streams {
 
     public static void main(String args[]){
         Map<Integer, String> map = new ConcurrentHashMap<>();
-        map.put(1,"lmao");
         System.out.println(map.keySet());
         System.out.println(map.get(1));
         System.out.println(map.get(2));

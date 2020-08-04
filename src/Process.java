@@ -14,6 +14,23 @@ public class Process implements Runnable{
     public static final String SERVER = "Server";
     private static Process instance = null;
     private static Streams streams;
+    private static boolean ready = false;
+
+    public static boolean isReady() {
+        return ready;
+    }
+
+    public static void setReady(boolean ready) {
+        Process.ready = ready;
+    }
+
+    public static Streams getStreams() {
+        return streams;
+    }
+
+    public static void setStreams(Streams streams) {
+        Process.streams = streams;
+    }
 
     public static Process getInstance(int nodeId) throws IOException {
         if(instance == null){
@@ -87,6 +104,8 @@ public class Process implements Runnable{
         System.out.println(nodeId+" Node has these client sockets:");
         System.out.println(streams.getClientSockets().keySet());
         System.out.println("Server keyset"+streams.getServerSockets().keySet());
+        //this is where everything is ready.
+        ready = true;
 
     }
 
