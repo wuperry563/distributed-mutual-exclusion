@@ -76,7 +76,10 @@ public class Modules implements Runnable{
     private void executeTopThread() {
         System.out.println("top");
         //generate crit section requests and execute on receiving permission.
-        csEnter();
+        for(int i = 0 ; i<10; i++){
+            csEnter();
+            csLeave();
+        }
     }
 
     private void csEnter() {
@@ -85,13 +88,16 @@ public class Modules implements Runnable{
         //TODO: implement/utilize Num requests, inter request delay
         sendMessageToAllNodes(request);
         attemptExecution();
-        csLeave();
     }
 
     private void csLeave() {
         System.out.println(nodeId+" unlocking critical section");
         this.streams.getCriticalSectionQueue().clear();
         this.streams.getRequestQueue().poll();
+        System.out.println("what's left in the queue?"+this.streams.getRequestQueue().size());
+        this.streams.getRequestQueue().stream().forEach(k->{
+            System.out.println("node id: "+k.getNodeId()+ "timestamp: "+k.getTimestamp());
+        });
         Message m = new ReleaseMessage("",this.nodeId);
         this.sendMessageToAllNodes(m);
     }
