@@ -4,15 +4,7 @@ public class RequestMessage extends Message{
     private Timestamp timestamp;
 
     public RequestMessage(String message, int nodeId, Timestamp timestamp) {
-        super(message, nodeId);
-        this.timestamp = timestamp;
+        super(message, nodeId, timestamp);
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
 }

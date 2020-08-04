@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.sql.Timestamp;
 
 public class MessageListener implements Runnable{
 
@@ -25,12 +26,7 @@ public class MessageListener implements Runnable{
         try {
             Message m = (Message) in.readObject();
             System.out.println("message is from" + m.getNodeId());
-            System.out.println("Is message instance of request?"+(m instanceof RequestMessage));
-            this.streams.getRequestQueue().add((RequestMessage) m);
-            Message ack = new AckMessage();
-            ack.setNodeId(this.nodeId);
-            ack.setMessage("beepis");
-            out.writeObject(ack);
+            processMessage(m);
             Thread t = new Thread(this);
             t.run();
         } catch (IOException e) {
@@ -39,6 +35,29 @@ public class MessageListener implements Runnable{
             e.printStackTrace();
         }
 
+
+    }
+
+    private void processMessage(Message m) throws IOException {
+        if(m instanceof RequestMessage){
+            this.streams.getRequestQueue().add((RequestMessage) m);
+            Message ack = new AckMessage();
+            ack.setNodeId(this.nodeId);
+            ack.setMessage("beepis");
+            out.writeObject(ack);
+        }
+        else if(m instanceof PollingMessage){
+            Message resp;
+            if(!this.streams.getCriticalSectionQueue().isEmpty()){
+                System.out.println(nodeId+" node is in critical section");
+                 resp = new PollResponseMessage(this.nodeId,true);
+            }
+            else{
+                System.out.println(nodeId+" node is NOT in critical section!");
+                resp = new PollResponseMessage(this.nodeId,false);
+            }
+            out.writeObject(resp);
+        }
 
     }
 }

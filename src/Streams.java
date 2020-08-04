@@ -13,6 +13,7 @@ public class Streams {
     private Map<Integer, Socket> clientSockets;
     private Map<Integer, Socket> serverSockets;
     private Queue<RequestMessage> requestQueue;
+    private Queue<NodeInfo> criticalSectionQueue;
     private static Streams instance;
 
     public static Streams getInstance(){
@@ -23,6 +24,7 @@ public class Streams {
     }
 
     private Streams(){
+        this.criticalSectionQueue = new PriorityBlockingQueue<>();
         RequestMessageComparator comparator = new RequestMessageComparator();
         requestQueue = new PriorityBlockingQueue<>(16,comparator);
         clientSockets = new ConcurrentHashMap<>();
@@ -31,6 +33,14 @@ public class Streams {
         serverOutputStreams = new ConcurrentHashMap<>();
         clientInputStreams = new ConcurrentHashMap<>();
         clientOutputStreams = new ConcurrentHashMap<>();
+    }
+
+    public Queue<NodeInfo> getCriticalSectionQueue() {
+        return criticalSectionQueue;
+    }
+
+    public void setCriticalSectionQueue(Queue<NodeInfo> criticalSectionQueue) {
+        this.criticalSectionQueue = criticalSectionQueue;
     }
 
     public Queue<RequestMessage> getRequestQueue() {
