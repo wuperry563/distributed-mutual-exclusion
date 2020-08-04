@@ -8,11 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dfcbbd56-cf34-4ae2-8eae-366750142358" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/MessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/MessageListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Modules.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Modules.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/node.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/node.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modules.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

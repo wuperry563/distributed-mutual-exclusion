@@ -20,6 +20,8 @@ public class MessageListener implements Runnable{
             System.out.println("message is from" + m.getNodeId());
             System.out.println("Is message instance of request?"+(m instanceof RequestMessage));
             this.streams.getRequestQueue().add((RequestMessage) m);
+            Thread t = new Thread(this);
+            t.run();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
