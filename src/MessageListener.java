@@ -15,17 +15,17 @@ public class MessageListener implements Runnable{
     }
 
     public void run(){
-        while(true){
-            try {
-                Message m = (Message) in.readObject();
-                System.out.println("message is from" + m.getNodeId());
-                System.out.println("Is message instance of request?"+(m instanceof RequestMessage));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        try {
+            Message m = (Message) in.readObject();
+            System.out.println("message is from" + m.getNodeId());
+            System.out.println("Is message instance of request?"+(m instanceof RequestMessage));
+            this.streams.getRequestQueue().add((RequestMessage) m);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
 
     }
 }

@@ -52,9 +52,11 @@ public class Modules implements Runnable{
 
     //Mutual Exclusion Service
     private void executeBottomThread() {
+        System.out.println("InputStreams");
+        System.out.println("node"+this.nodeId+""+streams.getServerInputStreams().keySet());
         streams.getServerInputStreams().forEach((k,v)->{
             if(k != this.nodeId){
-                System.out.println("thread started for node:" + k);
+                System.out.println("thread started for  :" + k);
                 MessageListener listener = new MessageListener(v);
             }
         });
