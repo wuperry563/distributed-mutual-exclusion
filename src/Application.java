@@ -16,8 +16,8 @@ public class Application{
             Thread.sleep(5000);
         }
         Streams streams = Streams.getInstance();
-        System.out.println(nodeId+"Ready to start algo. Client Sockets:\n"
-        +streams.getClientSockets().keySet());
+        System.out.println(nodeId+"Ready to start algo. Server InputStreams:\n"
+        +streams.getServerInputStreams().keySet());
 
         Modules modules = new Modules(nodeId);
     }
