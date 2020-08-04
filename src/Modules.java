@@ -80,7 +80,7 @@ public class Modules implements Runnable{
         RequestMessage r1 = new RequestMessage("",1,t);
         RequestMessage r2 = new RequestMessage("",2, t);
         RequestMessage r3 = new RequestMessage("",1, t2);
-        NodeRequestComparator comparator = new NodeRequestComparator();
+        RequestMessageComparator comparator = new RequestMessageComparator();
         Queue<RequestMessage> requestQueue = new PriorityBlockingQueue<>(16,comparator);
         requestQueue.add(r1);
         requestQueue.add(r2);

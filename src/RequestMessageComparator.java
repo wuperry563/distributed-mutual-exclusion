@@ -1,7 +1,7 @@
 import java.sql.Timestamp;
 import java.util.Comparator;
 
-public class NodeRequestComparator implements Comparator<RequestMessage> {
+public class RequestMessageComparator implements Comparator<RequestMessage> {
 
     @Override
     /*

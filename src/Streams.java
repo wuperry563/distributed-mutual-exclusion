@@ -42,7 +42,8 @@ public class Streams {
     private Map<Integer, ObjectOutputStream> clientOutputStreams;
 
     public Streams(){
-        requestQueue = new PriorityBlockingQueue<>();
+        RequestMessageComparator comparator = new RequestMessageComparator();
+        requestQueue = new PriorityBlockingQueue<>(16,comparator);
         clientSockets = new ConcurrentHashMap<>();
         serverSockets = new ConcurrentHashMap<>();
         serverInputStreams = new ConcurrentHashMap<>();
