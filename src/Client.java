@@ -10,11 +10,11 @@ public class Client implements Runnable{
     private Streams streams;
     public boolean isConnected;
 
-    public Client(NodeInfo nodeInfo, int id, int serverId, Streams streams){
+    public Client(NodeInfo nodeInfo, int id, int serverId){
         this.nodeInfo = nodeInfo;
         this.id = id;
         this.serverId = serverId;
-        this.streams = streams;
+        this.streams = Streams.getInstance();
         this.isConnected = false;
         Thread t = new Thread(this);
         t.start();
@@ -53,6 +53,6 @@ public class Client implements Runnable{
         NodeInfo info = new NodeInfo();
         info.setHostName("localhost");
         info.setListenPort(1234);
-        Client client = new Client(info, 1, 3, new Streams());
+        Client client = new Client(info, 1, 3);
     }
 }

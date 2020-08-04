@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Timestamp;
 import java.util.Queue;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -25,8 +27,8 @@ public class Modules implements Runnable{
         this.streams = streams;
     }
 
-    public Modules(Streams streams, int nodeId) {
-        this.streams = streams;
+    public Modules(int nodeId) {
+        this.streams = Streams.getInstance();
         this.nodeId = nodeId;
         Thread top = new Thread(this);
         top.setName(this.TOP);
@@ -39,6 +41,7 @@ public class Modules implements Runnable{
     @Override
     public void run() {
         String name = Thread.currentThread().getName();
+        System.out.println("node "+this.nodeId+" streams "+streams.getServerInputStreams().keySet());
         if(name.equals(TOP)){
             executeTopThread();
         }
@@ -49,7 +52,12 @@ public class Modules implements Runnable{
 
     //Mutual Exclusion Service
     private void executeBottomThread() {
-
+        streams.getServerInputStreams().forEach((k,v)->{
+            if(k != this.nodeId){
+                System.out.println("thread started for node:" + k);
+                MessageListener listener = new MessageListener(v);
+            }
+        });
     }
 
     //Application
@@ -63,13 +71,28 @@ public class Modules implements Runnable{
         Timestamp t = new Timestamp(System.currentTimeMillis());
         RequestMessage request = new RequestMessage("",this.nodeId, t);
         this.streams.getRequestQueue().add(request);
-        System.out.println("I am node:"+this.nodeId+"this is the keyset for my client sockets:\n"+
-                streams.getClientSockets().keySet());
+        sendRequestToAllNodes(request);
+    }
+
+    private void sendRequestToAllNodes(RequestMessage requestMessage) {
+       Parser.nodes.forEach((k,v)->{
+           if(k != this.nodeId){
+               ObjectInputStream in = streams.getClientInputStreams().get(k);
+               ObjectOutputStream out = streams.getClientOutputStreams().get(k);
+               try {
+                   out.writeObject(requestMessage);
+                   Message m = (Message)in.readObject();
+                   System.out.println(this.nodeId+"Read Message from server"+m.getMessage());
+               } catch (IOException | ClassNotFoundException e) {
+                   e.printStackTrace();
+               }
+           }
+       });
     }
 
     public static void main(String args[]) throws IOException, InterruptedException {
         Parser p = Parser.getInstance("config.txt");
-        Streams streams = new Streams();
+        Streams streams = Streams.getInstance();
         streams.getServerInputStreams();
         streams.getServerOutputStreams();
         streams.getClientOutputStreams();
@@ -91,6 +114,6 @@ public class Modules implements Runnable{
         System.out.println(requestQueue.poll().getNodeId());
         System.out.println(requestQueue.poll().getNodeId());
 
-        Modules modules = new Modules(streams, 1);
+        Modules modules = new Modules(1);
     }
 }

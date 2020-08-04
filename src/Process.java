@@ -24,13 +24,6 @@ public class Process implements Runnable{
         Process.ready = ready;
     }
 
-    public static Streams getStreams() {
-        return streams;
-    }
-
-    public static void setStreams(Streams streams) {
-        Process.streams = streams;
-    }
 
     public static Process getInstance(int nodeId) throws IOException {
         if(instance == null){
@@ -43,7 +36,7 @@ public class Process implements Runnable{
         this.nodeId = nodeId;
          parser = Parser.getInstance("config.txt");
          nodeInfo = parser.nodes.get(nodeId);
-         streams = new Streams();
+         streams = Streams.getInstance();
          connections = new TreeMap<>();
          startThreads();
     }
@@ -74,7 +67,7 @@ public class Process implements Runnable{
             System.out.println("nodesize"+parser.nodes.size());
             ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
             for(int i = 0 ; i <parser.nodes.size(); i++){
-                Server server = new Server(serverSocket,streams,nodeId);
+                Server server = new Server(serverSocket,nodeId);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -89,7 +82,7 @@ public class Process implements Runnable{
         parser.nodes.forEach((k, v ) -> {
             System.out.println("Target Node:"+k+"Client thread connecting to:"+v.hostName+"host, port:"+v.getListenPort()+ "This node:"+this.nodeId);
             if(k != nodeId){
-                Client client = new Client(v,nodeId, k ,streams);
+                Client client = new Client(v,nodeId, k);
                 while(!client.isConnected)
                 {
                     try {

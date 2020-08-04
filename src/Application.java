@@ -1,7 +1,6 @@
 import java.io.IOException;
 
 public class Application{
-    private Streams streams;
     public static void main(String[] args) throws IOException, InterruptedException {
         // TODO Auto-generated method stub
         if (args.length != 2) {
@@ -16,11 +15,11 @@ public class Application{
         while (!process.isReady()){
             Thread.sleep(5000);
         }
-        Streams streams = process.getStreams();
+        Streams streams = Streams.getInstance();
         System.out.println(nodeId+"Ready to start algo. Client Sockets:\n"
         +streams.getClientSockets().keySet());
 
-        Modules modules = new Modules(streams,nodeId);
+        Modules modules = new Modules(nodeId);
     }
 
 }

@@ -13,6 +13,25 @@ public class Streams {
     private Map<Integer, Socket> clientSockets;
     private Map<Integer, Socket> serverSockets;
     private Queue<RequestMessage> requestQueue;
+    private static Streams instance;
+
+    public static Streams getInstance(){
+        if(instance == null){
+            instance = new Streams();
+        }
+        return instance;
+    }
+
+    private Streams(){
+        RequestMessageComparator comparator = new RequestMessageComparator();
+        requestQueue = new PriorityBlockingQueue<>(16,comparator);
+        clientSockets = new ConcurrentHashMap<>();
+        serverSockets = new ConcurrentHashMap<>();
+        serverInputStreams = new ConcurrentHashMap<>();
+        serverOutputStreams = new ConcurrentHashMap<>();
+        clientInputStreams = new ConcurrentHashMap<>();
+        clientOutputStreams = new ConcurrentHashMap<>();
+    }
 
     public Queue<RequestMessage> getRequestQueue() {
         return requestQueue;
@@ -41,16 +60,6 @@ public class Streams {
     private Map<Integer, ObjectInputStream> clientInputStreams;
     private Map<Integer, ObjectOutputStream> clientOutputStreams;
 
-    public Streams(){
-        RequestMessageComparator comparator = new RequestMessageComparator();
-        requestQueue = new PriorityBlockingQueue<>(16,comparator);
-        clientSockets = new ConcurrentHashMap<>();
-        serverSockets = new ConcurrentHashMap<>();
-        serverInputStreams = new ConcurrentHashMap<>();
-        serverOutputStreams = new ConcurrentHashMap<>();
-        clientInputStreams = new ConcurrentHashMap<>();
-        clientOutputStreams = new ConcurrentHashMap<>();
-    }
 
     public Map<Integer, ObjectInputStream> getServerInputStreams() {
         return serverInputStreams;

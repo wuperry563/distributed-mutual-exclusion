@@ -11,9 +11,9 @@ public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Streams streams;
     private int nodeId;
-    public Server(ServerSocket serverSocket, Streams streams, int nodeId) {
+    public Server(ServerSocket serverSocket, int nodeId) {
         this.serverSocket = serverSocket;
-        this.streams = streams;
+        this.streams = Streams.getInstance();
         this.nodeId = nodeId;
         Thread t = new Thread(this);
         t.start();
@@ -44,7 +44,7 @@ public class Server implements Runnable {
         ServerSocket serverSocket = new ServerSocket(nodeInfo.getListenPort());
             for(int i = 0 ; i< 2; i++){
                 System.out.println("HostPort+ " +nodeInfo.getListenPort());
-                Server server = new Server(serverSocket, new Streams(),1);
+                Server server = new Server(serverSocket,1);
             }
 //        });
 //        for(int i = 0 ; i<3; i++){
