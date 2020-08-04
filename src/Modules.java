@@ -85,6 +85,15 @@ public class Modules implements Runnable{
         //TODO: implement/utilize Num requests, inter request delay
         sendMessageToAllNodes(request);
         attemptExecution();
+        csLeave();
+    }
+
+    private void csLeave() {
+        System.out.println(nodeId+" unlocking critical section");
+        this.streams.getCriticalSectionQueue().clear();
+        this.streams.getRequestQueue().poll();
+        Message m = new ReleaseMessage("",this.nodeId);
+        this.sendMessageToAllNodes(m);
     }
 
     private void attemptExecution() {
@@ -132,12 +141,6 @@ public class Modules implements Runnable{
             NodeInfo info = parser.nodes.get(this.nodeId);
             this.streams.getCriticalSectionQueue().add(info);
             Thread.sleep(parser.meanCS);
-            //finish executing
-            System.out.println(nodeId+" unlocking critical section");
-            this.streams.getCriticalSectionQueue().clear();
-            this.streams.getRequestQueue().poll();
-            Message m = new ReleaseMessage("",this.nodeId);
-            this.sendMessageToAllNodes(m);
         } catch (Exception e) {
             e.printStackTrace();
         }

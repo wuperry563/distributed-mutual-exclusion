@@ -7,20 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfcbbd56-cf34-4ae2-8eae-366750142358" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ReleaseMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/AckMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/AckMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/MessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/MessageListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Modules.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Modules.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/PollResponseMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/PollResponseMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AckMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AckMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Modules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modules.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PollResponseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PollResponseMessage.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -156,12 +144,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Modules.java</url>
-          <line>187</line>
+          <line>190</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Modules.java</url>
-          <line>178</line>
+          <line>181</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
