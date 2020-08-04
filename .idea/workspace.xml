@@ -144,12 +144,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Modules.java</url>
-          <line>193</line>
+          <line>184</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Modules.java</url>
-          <line>184</line>
+          <line>175</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>

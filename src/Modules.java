@@ -40,11 +40,9 @@ public class Modules implements Runnable{
 
         this.streams = Streams.getInstance();
         this.nodeId = nodeId;
-        for(int i = 0 ; i<10; i++){
-            Thread top = new Thread(this);
-            top.setName(this.TOP);
-            top.start();
-        }
+        Thread top = new Thread(this);
+        top.setName(this.TOP);
+        top.start();
     }
 
     @Override
@@ -54,29 +52,22 @@ public class Modules implements Runnable{
         if(name.equals(TOP)){
             executeTopThread();
         }
-        else{
-            executeBottomThread();
-        }
-    }
-
-    //Mutual Exclusion Service
-    private void executeBottomThread() {
-//        System.out.println("InputStreams");
-//        System.out.println("node"+this.nodeId+""+streams.getServerInputStreams().keySet());
-//        streams.getServerInputStreams().forEach((k,v)->{
-//            if(k != this.nodeId){
-//                System.out.println("thread started for  :" + k);
-//                MessageListener listener = new MessageListener(v);
-//            }
-//        });
     }
 
     //Application
     private void executeTopThread() {
         System.out.println("top");
         //generate crit section requests and execute on receiving permission.
-        csEnter();
-        csLeave();
+        for(int i = 0; i<parser.numRequests; i++){
+            try {
+                Thread.sleep(Parser.requestDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            csEnter();
+            csLeave();
+        }
+
     }
 
     private void csEnter() {
@@ -104,7 +95,7 @@ public class Modules implements Runnable{
         while(!canExecute) {
             canExecute = canExecuteCriticalSection();
             try {
-                Thread.sleep(5000);
+                Thread.sleep(100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
