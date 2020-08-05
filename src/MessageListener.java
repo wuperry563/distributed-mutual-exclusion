@@ -1,7 +1,6 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.util.List;
+import java.util.Random;
 
 public class MessageListener implements Runnable{
 
@@ -26,9 +25,7 @@ public class MessageListener implements Runnable{
             Thread t = new Thread(this);
             t.run();
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
 
@@ -67,7 +64,31 @@ public class MessageListener implements Runnable{
         if(streams.getRequestQueue().isEmpty()){
             System.out.println(nodeId+"Finished, closing from message listener:");
             streams.terminateAllStreams();
+            logTimesToFile();
             System.exit(0);
         }
+    }
+
+    private void logTimesToFile() {
+        RandomAccessFile file;
+        List<Long> times = streams.getTimes();
+        try{
+            file = new RandomAccessFile("config-"+nodeId+".out", "rw");
+            for(Long time : times){
+                try{
+                    file.writeLong(time);
+                    file.writeChars("\n");
+                }
+                catch(Exception e){
+                    System.exit(-1);
+                }
+            }
+        }
+        catch(Exception e){
+            System.exit(-1);
+        }
+
+
+
     }
 }

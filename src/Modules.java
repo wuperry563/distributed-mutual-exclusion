@@ -69,6 +69,7 @@ public class Modules implements Runnable{
             long in = timeEnter.getTime();
             long out = timeExit.getTime();
             long ms = out - in ;
+            streams.getTimes().add(ms);
             System.out.println("execution took "+ms+"milliseconds");
         }
 

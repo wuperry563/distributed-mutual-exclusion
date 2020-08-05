@@ -16,8 +16,9 @@ public class Streams {
     private Map<Integer, Socket> serverSockets;
     private Queue<RequestMessage> requestQueue;
     private Queue<NodeInfo> criticalSectionQueue;
-    private List<Timestamp> timestamps;
+    private List<Long> times;
     private static Streams instance;
+
 
     public static Streams getInstance(){
         if(instance == null){
@@ -26,17 +27,17 @@ public class Streams {
         return instance;
     }
 
-    public List<Timestamp> getTimestamps() {
-        return timestamps;
+    public List<Long> getTimes() {
+        return times;
     }
 
-    public void setTimestamps(List<Timestamp> timestamps) {
-        this.timestamps = timestamps;
+    public void setTimes(List<Long> times) {
+        this.times = times;
     }
 
     private Streams(){
         this.criticalSectionQueue = new ConcurrentLinkedQueue<>();
-        this.timestamps = Collections.synchronizedList(new ArrayList<Timestamp>());
+        this.times = Collections.synchronizedList(new ArrayList<Long>());
         RequestMessageComparator comparator = new RequestMessageComparator();
         requestQueue = new PriorityBlockingQueue<>(16,comparator);
         clientSockets = new ConcurrentHashMap<>();
