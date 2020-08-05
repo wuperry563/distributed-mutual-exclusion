@@ -64,6 +64,7 @@ public class MessageListener implements Runnable{
         if(streams.getRequestQueue().isEmpty()){
             System.out.println(nodeId+"Finished, closing from message listener:");
             logTimesToFile();
+            System.out.println("logging finished");
             streams.terminateAllStreams();
             System.exit(0);
         }
@@ -76,6 +77,7 @@ public class MessageListener implements Runnable{
             file = new RandomAccessFile("config-"+nodeId+".out", "rw");
             for(Long time : times){
                 try{
+                    System.out.println("writing longs"+time);
                     file.writeLong(time);
                     file.writeChars("\n");
                 }
