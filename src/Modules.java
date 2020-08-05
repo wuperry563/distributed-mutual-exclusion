@@ -62,14 +62,13 @@ public class Modules implements Runnable{
         System.out.println("top");
         //generate crit section requests and execute on receiving permission.
         for(int i = 0; i<parser.numRequests; i++){
-            timeEnter = new Timestamp(System.currentTimeMillis());
             csEnter();
             csLeave();
-            timeExit = new Timestamp(System.currentTimeMillis());
         }
     }
 
     private void csEnter() {
+        timeEnter = new Timestamp(System.currentTimeMillis());
         long in = timeEnter.getTime();
         try {
             Thread.sleep(Parser.requestDelay);
@@ -81,6 +80,7 @@ public class Modules implements Runnable{
         this.streams.getRequestQueue().add(request);
         sendMessageToAllNodes(request);
         attemptExecution();
+        timeExit = new Timestamp(System.currentTimeMillis());
         long out = timeExit.getTime();
         long ms = out - in ;
         streams.getTimes().add(ms);
