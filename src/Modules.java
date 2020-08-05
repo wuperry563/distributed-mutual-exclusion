@@ -66,16 +66,11 @@ public class Modules implements Runnable{
             csEnter();
             csLeave();
             timeExit = new Timestamp(System.currentTimeMillis());
-            long in = timeEnter.getTime();
-            long out = timeExit.getTime();
-            long ms = out - in ;
-            streams.getTimes().add(ms);
-            System.out.println("execution took "+ms+"milliseconds");
         }
-
     }
 
     private void csEnter() {
+        long in = timeEnter.getTime();
         try {
             Thread.sleep(Parser.requestDelay);
         } catch (InterruptedException e) {
@@ -86,6 +81,9 @@ public class Modules implements Runnable{
         this.streams.getRequestQueue().add(request);
         sendMessageToAllNodes(request);
         attemptExecution();
+        long out = timeExit.getTime();
+        long ms = out - in ;
+        streams.getTimes().add(ms);
     }
 
     private void csLeave() {
