@@ -63,8 +63,8 @@ public class MessageListener implements Runnable{
     private void evaluateTermination() {
         if(streams.getRequestQueue().isEmpty()){
             System.out.println(nodeId+"Finished, closing from message listener:");
-            streams.terminateAllStreams();
             logTimesToFile();
+            streams.terminateAllStreams();
             System.exit(0);
         }
     }
@@ -80,6 +80,7 @@ public class MessageListener implements Runnable{
                     file.writeChars("\n");
                 }
                 catch(Exception e){
+                    e.printStackTrace();
                     System.exit(-1);
                 }
             }
