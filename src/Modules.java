@@ -126,6 +126,7 @@ public class Modules implements Runnable{
         List<Message> messages = new ArrayList<>();
        Parser.nodes.forEach((k,v)->{
            if(k != this.nodeId){
+               streams.getMessageCount().incrementAndGet();
                ObjectInputStream in = streams.getClientInputStreams().get(k);
                ObjectOutputStream out = streams.getClientOutputStreams().get(k);
                try {

@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Streams {
 
@@ -18,7 +19,15 @@ public class Streams {
     private Queue<NodeInfo> criticalSectionQueue;
     private List<Long> times;
     private static Streams instance;
+    private AtomicInteger messageCount;
 
+    public AtomicInteger getMessageCount() {
+        return messageCount;
+    }
+
+    public void setMessageCount(AtomicInteger messageCount) {
+        this.messageCount = messageCount;
+    }
 
     public static Streams getInstance(){
         if(instance == null){
@@ -26,6 +35,7 @@ public class Streams {
         }
         return instance;
     }
+
 
     public List<Long> getTimes() {
         return times;
@@ -36,6 +46,7 @@ public class Streams {
     }
 
     private Streams(){
+        messageCount = new AtomicInteger();
         this.criticalSectionQueue = new ConcurrentLinkedQueue<>();
         this.times = Collections.synchronizedList(new ArrayList<Long>());
         RequestMessageComparator comparator = new RequestMessageComparator();

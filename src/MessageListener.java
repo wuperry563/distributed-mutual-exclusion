@@ -75,6 +75,8 @@ public class MessageListener implements Runnable{
         List<Long> times = streams.getTimes();
         try{
             fileWriter = new FileWriter("config-"+nodeId+".txt");
+            FileWriter messageWriter = new FileWriter("messages-"+nodeId+".txt");
+            messageWriter.write("Total Messages:\n"+streams.getMessageCount().get());
             for(Long time : times){
                 try{
                     System.out.println("writing longs"+time);
@@ -84,10 +86,12 @@ public class MessageListener implements Runnable{
                 catch(Exception e){
                     e.printStackTrace();
                     fileWriter.close();
+                    messageWriter.close();
                     System.exit(-1);
                 }
             }
             fileWriter.close();
+            messageWriter.close();
         }
         catch(Exception e){
             e.printStackTrace();
