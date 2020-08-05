@@ -74,7 +74,7 @@ public class MessageListener implements Runnable{
         FileWriter fileWriter;
         List<Long> times = streams.getTimes();
         try{
-            fileWriter = new FileWriter("config-"+nodeId+".out");
+            fileWriter = new FileWriter("config-"+nodeId+".txt");
             for(Long time : times){
                 try{
                     System.out.println("writing longs"+time);
