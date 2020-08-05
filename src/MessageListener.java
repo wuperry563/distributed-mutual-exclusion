@@ -83,11 +83,14 @@ public class MessageListener implements Runnable{
                 }
                 catch(Exception e){
                     e.printStackTrace();
+                    file.close();
                     System.exit(-1);
                 }
             }
+            file.close();
         }
         catch(Exception e){
+            e.printStackTrace();
             System.exit(-1);
         }
 
