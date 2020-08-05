@@ -37,6 +37,7 @@ public class MessageListener implements Runnable{
             Message ack = new AckMessage("",this.nodeId);
             ack.setNodeId(this.nodeId);
             ack.setMessage("beepis");
+            streams.getMessageCount().incrementAndGet();
             out.writeObject(ack);
         }
         else if(m instanceof PollingMessage){
@@ -47,6 +48,7 @@ public class MessageListener implements Runnable{
             else{
                 resp = new PollResponseMessage(this.nodeId,false);
             }
+            streams.getMessageCount().incrementAndGet();
             out.writeObject(resp);
         }
         //received release. poll first from pqueue
@@ -54,6 +56,7 @@ public class MessageListener implements Runnable{
             RequestMessage req = streams.getRequestQueue().poll();
             System.out.println(req.getNodeId()  + " has been removed");
             Message response = new AckMessage("",this.nodeId);
+            streams.getMessageCount().incrementAndGet();
             out.writeObject(response);
             evaluateTermination();
         }
