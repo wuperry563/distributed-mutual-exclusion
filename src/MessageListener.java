@@ -71,23 +71,23 @@ public class MessageListener implements Runnable{
     }
 
     private void logTimesToFile() {
-        RandomAccessFile file;
+        FileWriter fileWriter;
         List<Long> times = streams.getTimes();
         try{
-            file = new RandomAccessFile("config-"+nodeId+".out", "rw");
+            fileWriter = new FileWriter("config-"+nodeId+".out");
             for(Long time : times){
                 try{
                     System.out.println("writing longs"+time);
-                    file.writeLong(time);
-                    file.writeChars("\n");
+                    fileWriter.write(time.toString());
+                    fileWriter.write("\n");
                 }
                 catch(Exception e){
                     e.printStackTrace();
-                    file.close();
+                    fileWriter.close();
                     System.exit(-1);
                 }
             }
-            file.close();
+            fileWriter.close();
         }
         catch(Exception e){
             e.printStackTrace();
